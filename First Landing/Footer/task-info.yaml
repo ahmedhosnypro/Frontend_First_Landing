@@ -1373,6 +1373,6 @@ files:
         await new Test().runTests()
     }).timeout(30000);
   learner_created: false
-feedback_link: https://hyperskill.org/projects/243/stages/1221/implement#comment
+feedback_link: https://hyperskill.org/learn/step/18927#comment
 status: Unchecked
 record: -1

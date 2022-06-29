@@ -246,9 +246,9 @@ files:
 - name: src/style.css
   visible: true
   learner_created: true
-feedback_link: https://hyperskill.org/projects/243/stages/1217/implement#comment
+feedback_link: https://hyperskill.org/learn/step/18923#comment
 status: Solved
 feedback:
   message: Congratulations!
   time: Wed, 29 Jun 2022 14:24:53 UTC
-record: -1
+record: 1
