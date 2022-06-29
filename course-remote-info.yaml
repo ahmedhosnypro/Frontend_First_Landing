@@ -1,0 +1,151 @@
+hyperskill_project:
+  id: 243
+  ide_files: https://stepik.org/media/attachments/lesson/688284/additional_files.json
+  is_template_based: false
+  use_ide: true
+update_date: Thu, 01 Jan 1970 00:00:00 UTC
+stages:
+- id: 1217
+  step: 18923
+  is_completed: true
+- id: 1218
+  step: 18924
+  is_completed: false
+- id: 1219
+  step: 18925
+  is_completed: false
+- id: 1220
+  step: 18926
+  is_completed: false
+- id: 1221
+  step: 18927
+  is_completed: false
+- id: 1222
+  step: 18928
+  is_completed: false
+topics:
+  0:
+  - title: Binary numbers
+    theory_id: 5544
+  - title: Hexadecimal numbers
+    theory_id: 8788
+  - title: Interface elements
+    theory_id: 15253
+  - title: Fonts
+    theory_id: 15045
+  - title: Colors
+    theory_id: 14914
+  - title: IDE
+    theory_id: 10996
+  - title: Introduction to Operating systems
+    theory_id: 9704
+  - title: World Wide Web
+    theory_id: 6633
+  - title: HyperText Transfer Protocol
+    theory_id: 6569
+  - title: HTML basics
+    theory_id: 6434
+  - title: HTTP URL
+    theory_id: 6740
+  - title: Tags and Attributes
+    theory_id: 7536
+  - title: HTML page structure
+    theory_id: 6491
+  - title: Comments
+    theory_id: 7502
+  - title: Block-level elements
+    theory_id: 7271
+  - title: Inline elements
+    theory_id: 7518
+  - title: What is CSS
+    theory_id: 7678
+  - title: Connecting CSS to HTML
+    theory_id: 7418
+  - title: Basic syntax
+    theory_id: 7722
+  - title: Comments
+    theory_id: 7730
+  - title: Relative units
+    theory_id: 10671
+  - title: Absolute units
+    theory_id: 10605
+  - title: HTML attributes id and class
+    theory_id: 7527
+  - title: Margin and Padding
+    theory_id: 8346
+  - title: Width and Height
+    theory_id: 8325
+  - title: CSS Selectors
+    theory_id: 7738
+  - title: DOM
+    theory_id: 8635
+  - title: Google Fonts
+    theory_id: 7844
+  - title: Border
+    theory_id: 8355
+  - title: line-height
+    theory_id: 11153
+  - title: Introduction to Node.js
+    theory_id: 12691
+  - title: Links
+    theory_id: 11834
+  - title: Layout elements
+    theory_id: 13326
+  - title: Fonts
+    theory_id: 15189
+  - title: The lang attribute
+    theory_id: 12212
+  - title: Colors
+    theory_id: 7973
+  - title: Background
+    theory_id: 11670
+  - title: Code style
+    theory_id: 11469
+  - title: Command line overview
+    theory_id: 8977
+  - title: Parameters and Options
+    theory_id: 9746
+  - title: Web development
+    theory_id: 13931
+  - title: Introduction to JavaScript
+    theory_id: 8016
+  - title: WebStorm
+    theory_id: 9492
+  - title: RGB
+    theory_id: 8819
+  1:
+  - title: Position
+    theory_id: 11581
+  - title: Float
+    theory_id: 12697
+  - title: Clear
+    theory_id: 12705
+  - title: Introduction to Flexbox
+    theory_id: 11760
+  - title: Orientation and Display order
+    theory_id: 11768
+  - title: Flexibility, growth and contraction ratio
+    theory_id: 18859
+  - title: Axis alignment
+    theory_id: 11784
+  - title: Images
+    theory_id: 9237
+  - title: Attribute selectors and Universal selector
+    theory_id: 12228
+  - title: Code style
+    theory_id: 12446
+  2:
+  - title: Text Alignment
+    theory_id: 11589
+  - title: Overflow
+    theory_id: 12454
+  - title: Combinators
+    theory_id: 12236
+  4:
+  - title: Positioning properties
+    theory_id: 8204
+  - title: Transform
+    theory_id: 12204
+  5:
+  - title: HTML forms
+    theory_id: 6560

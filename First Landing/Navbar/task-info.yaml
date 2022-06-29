@@ -1,0 +1,472 @@
+type: edu
+files:
+- name: src/index.html
+  visible: true
+  text: |-
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+    </head>
+    <body>
+
+    </body>
+    </html>
+  learner_created: false
+- name: test/test.js
+  visible: false
+  text: |
+    import path from 'path';
+    import {correct, StageTest, wrong} from 'hs-test-web';
+
+    const pagePath = path.join(import.meta.url, '../../src/index.html');
+
+    // run headless
+    // process.env.NODE_ENV = 'test_lib'
+
+    class Test extends StageTest {
+
+        page = this.getPage(pagePath)
+
+        tests = [this.node.execute(async () => {
+            // set viewport
+            await this.page.open()
+            await this.page.setViewport({width: 815, height: 600})
+            return correct()
+        }),
+            this.page.execute(() => {
+                // test #1
+                // # OF NODES
+
+                // HELPERS-->
+                this.notExist = (node, parentNode = "body", nodeName) => {
+                    const element = document.body.querySelector(node)
+                    if (!element) return true
+                    if(nodeName && element.nodeName.toLowerCase() !== nodeName) return true
+                    const parent = element.parentElement
+                    return parent.nodeName.toLowerCase() !== parentNode
+                };
+                this.innerTextExist = (node, correctVal) => {
+                    const element = document.body.querySelector(node);
+                    if (correctVal) return !element.innerText.trim().includes(correctVal)
+                    return !element.innerText || element.innerText.trim().length === 0;
+                };
+                this.correctAttr = (node, attr, correctVal) => {
+                    const element = document.querySelector(node)
+                    if (!element) return true
+                    const _attr = element.getAttribute(attr)
+                    return !_attr || !_attr.includes(correctVal)
+                };
+                this.correctStyle = (node, prop, correctVal) => {
+                    const element = document.querySelector(node);
+                    let style = getComputedStyle(element)[prop];
+                    if (style.includes("px") && !style.includes(" ")) {
+                        style = Math.floor(style.split("px")[0]) + 1
+                        correctVal = Math.floor(correctVal.split("px")[0]) + 1
+                    }
+                    return !style || style !== correctVal
+                };
+                this.bgColorExist = (node) => {
+                    const empty = "rgba(0, 0, 0, 0)";
+                    const element = document.querySelector(node);
+                    const style = getComputedStyle(element).backgroundColor;
+                    return !style || style.trim() === empty;
+                };
+                // <--HELPERS
+
+                // check number of nodes in body
+                let bodyNodes = Array.from(document.body.childNodes);
+                this.innerBodyElements = bodyNodes.filter(
+                    e => e.nodeType === Node.ELEMENT_NODE);
+
+                let len = this.innerBodyElements.length;
+                const totalElements = 3;
+                const errorMsg = `There should be ${totalElements} elements in the body of the HTML document, found: ${len}`;
+                return len === totalElements ? correct() : wrong(errorMsg);
+
+            }), this.page.execute(() => {
+                // test #2
+                // TAG EXIST
+
+                // check if header exist
+                let errorMsg = "The header tag is missing in the body of the HTML document.";
+                if (this.notExist("header")) return wrong(errorMsg);
+
+                // check if main exist
+                errorMsg = "The main tag is missing in the body of the HTML document.";
+                if (this.notExist("main")) return wrong(errorMsg);
+
+                // check if footer exist
+                errorMsg = "The footer tag is missing in the body of the HTML document.";
+                if (this.notExist("footer")) return wrong(errorMsg);
+
+                return correct()
+
+            }), this.page.execute(() => {
+                // test #2.1
+                // TAG ORDER
+
+                const body = document.body.children;
+
+                // check  header order 1st
+                const header = body[0].tagName.toLowerCase();
+                let errorMsg = "The header tag should be the first element in the body of the HTML document.";
+                if (header !== "header") return wrong(errorMsg);
+
+                // check main order 2nd
+                const main = body[1].tagName.toLowerCase();
+                errorMsg = "The main tag should be the second element in the body of the HTML document.";
+                if (main !== "main") return wrong(errorMsg);
+
+                // check if footer exist
+                const footer = body[2].tagName.toLowerCase();
+                errorMsg = "The footer tag should be the third element in the body of the HTML document.";
+                if (footer !== "footer") return wrong(errorMsg);
+
+                return correct()
+            }), this.page.execute(() => {
+                // test #3
+                // INNER TEXT
+                // this test will be removed in later stages
+
+                // header check is removed
+
+
+                // check if main has inner text
+                let errorMsg = "The main tag is missing a placeholder inner text.";
+                if (this.innerTextExist("main")) return wrong(errorMsg)
+
+                // check if footer has inner text
+                errorMsg = "The footer tag is missing a placeholder inner text.";
+                if (this.innerTextExist("footer")) return wrong(errorMsg)
+
+                return correct()
+
+            }), this.page.execute(() => {
+                // test #4
+                // CSS LINK
+
+                // check if css link exist
+                const link = document.head.querySelector("link");
+                let errorMsg = "CSS link is missing in the head of the HTML document.";
+                if (!link) return wrong(errorMsg)
+
+                // check if css link has right href
+                errorMsg = "CSS link is missing the correct href attribute value.";
+                if (this.correctAttr("link", "href", "style.css")) return wrong(errorMsg);
+
+                // check if css link has right rel
+                errorMsg = "CSS link is missing the correct rel attribute value.";
+                if (this.correctAttr("link", "rel", "stylesheet")) return wrong(errorMsg);
+
+                return correct()
+
+            }), this.page.execute(() => {
+                // test #5
+                // HEIGHT
+
+                // check if body has max-height
+                let errorMsg = "The body tag doesn't have a correct max-height value.";
+                if (this.correctStyle("body", "maxHeight", "600px")) return wrong(errorMsg)
+
+                // check if header has min-height
+                errorMsg = "The header tag doesn't have the correct min-height value.";
+                if (this.correctStyle("header", "minHeight", "60px")) return wrong(errorMsg)
+
+                // check if main has min-height
+                errorMsg = "The main tag doesn't have the correct min-height value.";
+                if (this.correctStyle("main", "minHeight", "360px")) return wrong(errorMsg)
+
+                // check if footer has min-height
+                errorMsg = "The footer tag doesn't have the correct min-height value.";
+                if (this.correctStyle("footer", "minHeight", "180px")) return wrong(errorMsg)
+
+                return correct()
+
+            }), this.page.execute(() => {
+                // test #6
+                // BACKGROUND COLOR
+                // this test will be removed in later stages
+
+                // check if header has correct bg color
+                let errorMsg = "The header tag doesn't have the correct background color value.";
+                if (this.correctStyle("header", "backgroundColor", "rgba(0, 0, 0, 0.85)")) return wrong(errorMsg)
+
+                // check if main has bg color
+                errorMsg = "The main tag doesn't have a background color value.";
+                if (this.bgColorExist("main")) return wrong(errorMsg)
+
+                // check if footer has bg color
+                errorMsg = "The footer tag doesn't have a background color value.";
+                if (this.bgColorExist("footer")) return wrong(errorMsg)
+
+                return correct()
+
+            }), this.page.execute(() => {
+                // test #7
+                // BODY
+
+                // check if body has correct margin
+                let errorMsg = "The body tag doesn't have the correct margin value.";
+                if (this.correctStyle("body", "margin", "0px")) return wrong(errorMsg)
+
+                // check if body has correct font-family
+                errorMsg = "The body tag doesn't have the correct font-family value.";
+                if (this.correctStyle("body", "font-family", "sans-serif")) return wrong(errorMsg)
+
+                // check if body has correct line height
+                errorMsg = "The body tag doesn't have the correct line-height value.";
+                if (this.correctStyle("body", "line-height", "24px")) return wrong(errorMsg)
+
+                return correct()
+
+            }), this.page.execute(() => {
+                // test #8
+                // NAV
+
+                // check if nav exist
+                let errorMsg = "The nav tag is missing inside the header tag.";
+                if (this.notExist("nav", "header")) return wrong(errorMsg);
+
+                // CONTAINER STYLE
+
+                // check if nav has max-width style
+                errorMsg = "The nav tag doesn't have the correct max-width value.";
+                if (this.correctStyle("nav", "maxWidth", "100%")) return wrong(errorMsg)
+
+                // check if nav has padding right style
+                errorMsg = "The nav tag doesn't have the correct padding right value.";
+                if (this.correctStyle("nav", "paddingRight", "16px")) return wrong(errorMsg)
+
+                // check if nav has padding left style
+                errorMsg = "The nav tag doesn't have the correct padding left value.";
+                if (this.correctStyle("nav", "paddingLeft", "16px")) return wrong(errorMsg)
+
+                // check if nav has margin right style
+                errorMsg = "The nav tag doesn't have the correct margin right value.";
+                if (this.correctStyle("nav", "marginRight", "0px")) return wrong(errorMsg)
+
+                // check if nav has margin left style
+                errorMsg = "The nav tag doesn't have the correct margin left value.";
+                if (this.correctStyle("nav", "marginLeft", "0px")) return wrong(errorMsg)
+
+                return correct()
+
+            }), this.page.execute(() => {
+                // test #9
+                // NAV FLEX
+
+                // check if nav has flex style
+                let errorMsg = "The nav tag doesn't have the correct display value.";
+                if (this.correctStyle("nav", "display", "flex")) return wrong(errorMsg)
+
+                // check if nav has flex wrap style
+                errorMsg = "The nav tag doesn't have the correct flex-wrap value.";
+                if (this.correctStyle("nav", "flexWrap", "wrap")) return wrong(errorMsg)
+
+                // check if nav has justify-content style
+                errorMsg = "The nav tag doesn't have the correct justify-content value.";
+                if (this.correctStyle("nav", "justifyContent", "space-between")) return wrong(errorMsg)
+
+                return correct()
+
+            }), this.page.execute(() => {
+                // test #10
+                // PY-1
+
+                // NAV
+                // check if nav has padding top style
+                let errorMsg = "The nav tag doesn't have the correct padding top value.";
+                if (this.correctStyle("nav", "paddingTop", "4px")) return wrong(errorMsg)
+
+                // check if nav has padding bottom style
+                errorMsg = "The nav tag doesn't have the correct padding bottom value.";
+                if (this.correctStyle("nav", "paddingBottom", "4px")) return wrong(errorMsg)
+
+                // HEADER
+                // check if header has padding top style
+                errorMsg = "The header tag doesn't have the correct padding top value.";
+                if (this.correctStyle("header", "paddingTop", "4px")) return wrong(errorMsg)
+
+                // check if header has padding bottom style
+                errorMsg = "The header tag doesn't have the correct padding bottom value.";
+                if (this.correctStyle("header", "paddingBottom", "4px")) return wrong(errorMsg)
+
+                return correct()
+
+            }), this.page.execute(() => {
+                // test #11
+                // LINKS EXIST
+
+                // LINK_LOGO
+                // check if link logo exist
+                let errorMsg = "The anchor tag with the id of 'link_logo' is missing inside the nav tag.";
+                if (this.notExist("#link_logo", "nav", "a")) return wrong(errorMsg);
+
+                // LINK_HOME
+                // check if link home exist
+                errorMsg = "The anchor tag with the id of 'link_home' is missing inside the nav tag.";
+                if (this.notExist("#link_home", "nav", "a")) return wrong(errorMsg);
+
+                // LINK_PRODUCT
+                // check if link product exist
+                errorMsg = "The anchor tag with the id of 'link_product' is missing inside the nav tag.";
+                if (this.notExist("#link_product", "nav", "a")) return wrong(errorMsg);
+
+                // LINK_CONTACT
+                // check if link contact exist
+                errorMsg = "The anchor tag with the id of 'link_contact' is missing inside the nav tag.";
+                if (this.notExist("#link_contact", "nav", "a")) return wrong(errorMsg);
+
+                return correct()
+
+            }), this.page.execute(() => {
+                // test #12
+                // LINKS HREF
+
+                // LINK_LOGO
+                // check if link logo href correct
+                let errorMsg = "The anchor tag with the id of 'link_logo' is missing the correct href attribute.";
+                if (this.correctAttr("#link_logo", "href", "#home")) return wrong(errorMsg);
+
+                // LINK_HOME
+                // check if link home href correct
+                errorMsg = "The anchor tag with the id of 'link_home' is missing the correct href attribute.";
+                if (this.correctAttr("#link_home", "href", "#home")) return wrong(errorMsg);
+
+                // LINK_PRODUCT
+                // check if link product href correct
+                errorMsg = "The anchor tag with the id of 'link_product' is missing the correct href attribute.";
+                if (this.correctAttr("#link_product", "href", "#product")) return wrong(errorMsg);
+
+                // LINK_CONTACT
+                // check if link contact href correct
+                errorMsg = "The anchor tag with the id of 'link_contact' is missing the correct href attribute.";
+                if (this.correctAttr("#link_contact", "href", "#contact")) return wrong(errorMsg);
+
+                return correct()
+
+            }), this.page.execute(() => {
+                // test #13
+                // LINK IMG
+
+                // check if img exist
+                let errorMsg = "The image tag is missing inside the link tag with the id of 'link_logo'.";
+                if (this.notExist("img", "a")) return wrong(errorMsg);
+
+                // check if img has correct src
+                errorMsg = "The image tag in '#link_logo' doesn't have an src attribute value.";
+                if (this.correctAttr("img", "src", "")) return wrong(errorMsg);
+
+                // check if img has correct width
+                errorMsg = "The image tag in '#link_logo' doesn't have the correct width attribute value.";
+                if (this.correctAttr("img", "width", "64")) return wrong(errorMsg);
+
+                // check if img has correct height
+                errorMsg = "The image tag in '#link_logo' doesn't have the correct height attribute value.";
+                if (this.correctAttr("img", "height", "64")) return wrong(errorMsg);
+
+                // check if img has correct title
+                errorMsg = "The image tag in '#link_logo' doesn't have a title attribute value.";
+                if (this.correctAttr("img", "title", "")) return wrong(errorMsg);
+
+                // check if img has correct alt
+                errorMsg = "The image tag in '#link_logo' doesn't have an alt attribute value.";
+                if (this.correctAttr("img", "alt", "")) return wrong(errorMsg);
+
+
+                return correct()
+
+            }), this.page.execute(() => {
+                // test #14
+                // LINKS INNER TEXT
+
+                // LINK_HOME
+                // check if link home inner-text correct
+                let errorMsg = "The anchor tag with the id of 'link_home' doesn't have the correct inner-text.";
+                if (this.innerTextExist("#link_home", "Home")) return wrong(errorMsg);
+
+                // LINK_PRODUCT
+                // check if link product inner-text correct
+                errorMsg = "The anchor tag with the id of 'link_product' doesn't have the correct inner-text.";
+                if (this.innerTextExist("#link_product", "Product")) return wrong(errorMsg);
+
+                // LINK_CONTACT
+                // check if link contact inner-text correct
+                errorMsg = "The anchor tag with the id of 'link_contact' doesn't have the correct inner-text.";
+                if (this.innerTextExist("#link_contact", "Contact")) return wrong(errorMsg);
+
+                return correct()
+
+
+            }), this.page.execute(() => {
+                // test #15
+                // LINKS MY-AUTO
+
+                // LINK_LOGO
+                // check if link logo margin-top correct
+                let errorMsg = "The anchor tag with the id of 'link_logo' doesn't have the correct margin-top value.";
+                if (this.correctStyle("#link_logo", "marginTop", "0px")) return wrong(errorMsg);
+
+                // check if link logo margin-bottom correct
+                errorMsg = "The anchor tag with the id of 'link_logo' doesn't have the correct margin-bottom value.";
+                if (this.correctStyle("#link_logo", "marginBottom", "0px")) return wrong(errorMsg);
+
+                // LINK_HOME
+                // check if link home margin-top correct
+                errorMsg = "The anchor tag with the id of 'link_home' doesn't have the correct margin-top value.";
+                if (this.correctStyle("#link_home", "marginTop", "23.25px")) return wrong(errorMsg);
+
+                // check if link home margin-bottom correct
+                errorMsg = "The anchor tag with the id of 'link_home' doesn't have the correct margin-bottom value.";
+                if (this.correctStyle("#link_home", "marginBottom", "23.25px")) return wrong(errorMsg);
+
+                // LINK_PRODUCT
+                // check if link product margin-top correct
+                errorMsg = "The anchor tag with the id of 'link_product' doesn't have the correct margin-top value.";
+                if (this.correctStyle("#link_product", "marginTop", "23.25px")) return wrong(errorMsg);
+
+                // check if link product margin-bottom correct
+                errorMsg = "The anchor tag with the id of 'link_product' doesn't have the correct margin-bottom value.";
+                if (this.correctStyle("#link_product", "marginBottom", "23.25px")) return wrong(errorMsg);
+
+                // LINK_CONTACT
+                // check if link contact margin-top correct
+                errorMsg = "The anchor tag with the id of 'link_contact' doesn't have the correct margin-top value.";
+                if (this.correctStyle("#link_contact", "marginTop", "23.25px")) return wrong(errorMsg);
+
+                // check if link contact margin-bottom correct
+                errorMsg = "The anchor tag with the id of 'link_contact' doesn't have the correct margin-bottom value.";
+                if (this.correctStyle("#link_contact", "marginBottom", "23.25px")) return wrong(errorMsg);
+                return correct()
+
+            }), this.page.execute(() => {
+                // test #16
+                // LINKS COLOR
+
+                // LINK_HOME
+                let errorMsg = "The anchor tag with the id of 'link_home' doesn't have the correct color value.";
+                if (this.correctStyle("#link_home", "color", "rgb(142, 142, 142)")) return wrong(errorMsg);
+
+                // LINK_PRODUCT
+                errorMsg = "The anchor tag with the id of 'link_product' doesn't have the correct color value.";
+                if (this.correctStyle("#link_product", "color", "rgb(142, 142, 142)")) return wrong(errorMsg);
+
+                // LINK_CONTACT
+                errorMsg = "The anchor tag with the id of 'link_contact' doesn't have the correct color value.";
+                if (this.correctStyle("#link_contact", "color", "rgb(142, 142, 142)")) return wrong(errorMsg);
+
+                return correct()
+
+            })]
+
+    }
+
+    it("Test stage", async () => {
+        await new Test().runTests()
+    }).timeout(30000);
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/243/stages/1218/implement#comment
+status: Unchecked
+record: -1

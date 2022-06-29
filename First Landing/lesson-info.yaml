@@ -1,0 +1,9 @@
+type: framework
+content:
+- Layout
+- Navbar
+- Product banner
+- Product gallery
+- Footer
+- Contact form
+current_task: 0
