@@ -49,7 +49,43 @@ nav a:hover {
 
 main {
     min-height: 60vh;
-    background: blueviolet;
+}
+
+#home {
+    overflow: hidden;
+    padding: 1rem;
+    background: #f8f9fa;
+    position: relative;
+    margin: 3rem auto;
+    text-align: center;
+}
+
+#content {
+    margin: 3rem auto;
+}
+
+#content p {
+    font-size: 1.25rem;
+    font-weight: 300;
+}
+
+#content a {
+    max-width: max-content;
+    width: max-content;
+    margin: 0 auto;
+    display: inline-block;
+    border: 1px solid #0d6efd;
+    border-radius: .25rem;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: .375rem .75rem;
+    color: #fff;
+    background: #0d6efd;
+}
+
+#content a:hover {
+    background: #084eb9;
+    border: 1px solid #ffffff;
 }
 
 footer {
