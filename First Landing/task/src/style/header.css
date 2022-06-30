@@ -1,0 +1,39 @@
+header {
+    background: #0e1315;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 50%;
+    width: 50%;
+    min-height: border-box;
+    height: border-box;
+}
+
+nav a {
+    border: 0.5em solid transparent;
+    border-radius: 0.5em;
+}
+
+nav a:hover {
+    background: #1a6762
+}
+
+.logo-link {
+    border: none;
+}
+
+.logo-link:hover {
+    background: transparent;
+    transform: rotate(-15deg);
+}
+
+.logo-link:active {
+    background: transparent;
+    transform: rotate(-20deg);
+}

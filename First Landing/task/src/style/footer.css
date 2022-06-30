@@ -1,0 +1,36 @@
+footer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+    width: 100%;
+}
+
+footer > * {
+    margin:  1rem;
+}
+
+footer nav {
+    width: content-box;
+    max-width: content-box;
+    padding: 0;
+    margin: 0;
+    flex-flow: row wrap;
+}
+
+#contact {
+    width: border-box;
+    max-width: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-flow: column wrap;
+}
+#contact > *{
+    margin:  .25rem;
+    display: block;
+}
+
+#contact button{
+    align-self: center;
+}

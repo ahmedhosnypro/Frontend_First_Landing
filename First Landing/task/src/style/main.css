@@ -1,0 +1,107 @@
+body {
+    background: #000000;
+    color: white;
+
+    height: 100vh;
+    min-height: 100vh;
+
+    margin: 0;
+    font-family: sans-serif;
+    line-height: 1.5;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+h1 {
+    margin: 0;
+}
+
+main {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    overflow: auto;
+    background: #263238;
+}
+
+#home {
+    padding: 1vh 0;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #3c4e57;
+
+    min-width: 100%;
+}
+
+#home p {
+    max-width: 50%;
+    font-weight: 300;
+    margin: 0.5em 0 1em 0;
+}
+
+#home a {
+    max-width: max-content;
+    width: max-content;
+    display: inline-block;
+    border: 1px solid #0d6efd;
+    border-radius: .25rem;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: .375rem .75rem;
+    color: #fff;
+    background: #0d6efd;
+}
+
+#home a:hover {
+    background: #084eb9;
+    border: 1px solid #ffffff;
+}
+
+#products {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.product {
+    min-width: 90%;
+    max-width: 90%;
+    padding:  1rem;
+    margin:  1rem ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
+    text-align: center;
+    border: 1px solid #3b4950;
+    border-radius: .5rem;
+}
+
+.product h2 {
+    margin: 0;
+}
+
+.product p {
+    margin: 0;
+    font-size: 1.125rem;
+    max-width: 80%;
+
+}
+
+.product iframe {
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 45vh;
+    padding: 1rem;
+    border: none;
+}
+

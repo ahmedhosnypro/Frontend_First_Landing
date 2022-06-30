@@ -1908,10 +1908,22 @@ files:
         border: .5em solid transparent;
     }
   learner_created: true
+- name: src/index2.html
+  visible: true
+  learner_created: true
+- name: src/style/main.css
+  visible: true
+  learner_created: true
+- name: src/style/header.css
+  visible: true
+  learner_created: true
+- name: src/style/footer.css
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/18928#comment
 status: Solved
 feedback:
   message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">JetBrains
     Academy</a> to continue learning.
-  time: Thu, 30 Jun 2022 04:07:08 UTC
+  time: Thu, 30 Jun 2022 11:56:01 UTC
 record: -1
