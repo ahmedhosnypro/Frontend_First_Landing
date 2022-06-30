@@ -1089,6 +1089,107 @@ files:
         await new Test().runTests()
     }).timeout(30000);
   learner_created: false
+- name: src/style.css
+  visible: true
+  text: |
+    body {
+        max-height: 100vh;
+        height: 100vh;
+        min-height: 100vh;
+        margin: 0;
+        font-family: sans-serif;
+        line-height: 1.5;
+
+    }
+
+    header {
+        min-height: 10vh;
+        background: rgba(0, 0, 0, .85);
+        padding: 0.25rem 0;
+    }
+
+    nav {
+        background: black;
+        max-width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        padding: .25rem 1rem;
+    }
+
+    #link_logo img {
+        background: transparent;
+        width: 64px;
+        height: 64px;
+    }
+
+    nav a {
+        display: block;
+        text-decoration: none;
+        color: #8e8e8e;
+        border: .5em solid transparent;
+        margin: 23.25px 0;
+    }
+
+    #link_logo {
+        margin: 0;
+    }
+
+    nav a:hover {
+        background: #1b2529;
+        border: .5em solid #1b2529;
+        border-radius: .5em;
+    }
+
+    main {
+        min-height: 60vh;
+    }
+
+    #home {
+        overflow: hidden;
+        padding: 1rem;
+        background: #f8f9fa;
+        position: relative;
+        margin: 3rem auto;
+        text-align: center;
+    }
+
+    #content {
+        margin: 3rem auto;
+    }
+
+    #content p {
+        font-size: 1.25rem;
+        font-weight: 300;
+    }
+
+    #content a {
+        max-width: max-content;
+        width: max-content;
+        margin: 0 auto;
+        display: inline-block;
+        border: 1px solid #0d6efd;
+        border-radius: .25rem;
+        font-size: 1rem;
+        text-decoration: none;
+        padding: .375rem .75rem;
+        color: #fff;
+        background: #0d6efd;
+    }
+
+    #content a:hover {
+        background: #084eb9;
+        border: 1px solid #ffffff;
+    }
+
+    footer {
+        min-height: 30vh;
+        background: aqua;
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/18926#comment
-status: Unchecked
-record: -1
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Wed, 29 Jun 2022 18:19:37 UTC
+record: 4

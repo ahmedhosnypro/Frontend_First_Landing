@@ -7,12 +7,12 @@
 </head>
 <body>
 <header>
-    <nav>
+    <nav id="header-nav">
         <a href="#home" id="link_logo">
             <img src="images/logo.png" alt="Logo" title="A7med" width="64px" height="64px"/>
         </a>
         <a href="#home" id="link_home">Home</a>
-        <a href="#products" id="link_product">Products</a>
+        <a href="#product" id="link_product">Products</a>
         <a href="#contact" id="link_contact">Contact</a>
     </nav>
 </header>
@@ -29,9 +29,59 @@
             <a href="#product">Coming soon</a>
         </div>
     </div>
+    <!-- ROW -->
+    <div id="product">
+        <!-- COLUMN -->
+        <div id="col-1">
+            <div class="product-info">
+                <h2>Case Converter</h2>
+                <p>
+                    We work with texts quite often, and it's very sad when it turns out that the text should have been
+                    written in a different case.
+                    Instead of editing it, you can create a simple application that does
+                    the job for us.
+                </p>
+            </div>
+            <div class="product-overview">
+                <img src="images/logo.png" alt="Logo" title="logo">
+                <iframe src="https://ahmedhosnypro.github.io/Frontend_CaseConverter/"
+                        title="Case Converter" width="50%" height="100%"></iframe>
+            </div>
+        </div>
+        <!-- COLUMN -->
+        <div id="col-2">
+            <div class="product-info">
+                <h2>Hypergram</h2>
+                <p>For every photographer, the process of creating an image does not end after pressing the shutter
+                    button.
+                    You will always be pressed by the need to tweak the photos a little to make them look
+                    like how you've conceived them.
+                    In most cases, the process of retouching a photo is not as easy as
+                    many would want to imagine.
+                    Let's create a simple app that can help you with image editing!</p>
+            </div>
+            <div class="product-overview">
+                <img src="images/logo.png" alt="Logo" title="logo">
+                <iframe src="https://ahmedhosnypro.github.io/Frontend_Hypergram/"
+                        title="Hypergram" width="50%" height="100%"></iframe>
+            </div>
+        </div>
+    </div>
 </main>
 <footer>
-    Footer content
+    <div id="contact">
+        <div id="contact-col1">
+                <a href="#home" id="footer_link_logo">
+                    <img src="images/logo.png" alt="Logo" title="A7med" width="64px" height="64px"/>
+                </a>
+            <div id="footer-links">
+                <a href="#home" id="footer_link_home">Home</a>
+                <a href="#product" id="footer_link_product">Products</a>
+                <a href="#contact" id="footer_link_contact">Contact</a>
+            </div>
+            <p>2022</p>
+        </div>
+    </div>
 </footer>
 </body>
 </html>

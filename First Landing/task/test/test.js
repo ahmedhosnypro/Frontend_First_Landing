@@ -22,6 +22,7 @@ class Test extends StageTest {
 
             // HELPERS-->
             this.notExist = (node, parentNode = "body", nodeName) => {
+                if (typeof parentNode !== "string") return !parentNode.querySelector(node)
                 const element = document.body.querySelector(node)
                 if (!element) return true
                 if(nodeName && element.nodeName.toLowerCase() !== nodeName) return true
@@ -49,6 +50,7 @@ class Test extends StageTest {
                     style = Math.floor(style.split("px")[0]) + 1
                     correctVal = Math.floor(correctVal.split("px")[0]) + 1
                 }
+                // console.log(style)
                 return !style || style !== correctVal
             };
             this.bgColorExist = (node) => {
@@ -118,9 +120,7 @@ class Test extends StageTest {
 
             // main check is removed
 
-            // check if footer has inner text
-            let errorMsg = "The footer tag is missing a placeholder inner text.";
-            if (this.innerTextExist("footer")) return wrong(errorMsg)
+            // footer check is removed
 
             return correct()
 
@@ -602,9 +602,751 @@ class Test extends StageTest {
             errorMsg = "The anchor tag doesn't have the correct background color value.";
             if (this.correctStyle(anchor, "background-color", "rgb(13, 110, 253)")) return wrong(errorMsg);
 
+
             return correct()
 
+        }), this.page.execute(() => {
+            // test #22
+            // PRODUCT EXIST
+
+            // check if product div  exist
+            const productDiv = document.body.querySelector("#product");
+            let errorMsg = "The div tag with the id of 'product' is missing inside the main tag.";
+            if (this.notExist("#product", "main", "div")) return wrong(errorMsg);
+
+            // COLS EXIST
+
+            // check if col1 div exist
+            errorMsg = "The first column div tag the id of 'col-1' is missing inside the product div tag.";
+            if (this.notExist("#col-1", productDiv, "div")) return wrong(errorMsg);
+
+            // check if col2 div exist
+            errorMsg = "The second column div tag the id of 'col-2' is missing inside the product div tag.";
+            if (this.notExist("#col-2", productDiv, "div")) return wrong(errorMsg);
+
+            // CONTAINERS EXIST
+            const colDiv1 = productDiv.querySelector("#col-1");
+
+            // check if container1 div exist
+            errorMsg = "The first container div tag is missing inside the col-1 div tag.";
+            if (this.notExist("div", colDiv1, "div")) return wrong(errorMsg);
+
+            // check if container2 div exist
+            errorMsg = "The second container div tag is missing inside the col-1 div tag.";
+            if (this.notExist("div + div", colDiv1, "div")) return wrong(errorMsg);
+
+            const colDiv2 = productDiv.querySelector("#col-2");
+
+            // check if container1 div exist
+            errorMsg = "The first container div tag is missing inside the col-2 div tag.";
+            if (this.notExist("div", colDiv2, "div")) return wrong(errorMsg);
+
+            // check if container2 div exist
+            errorMsg = "The second container div tag is missing inside the col-2 div tag.";
+            if (this.notExist("div + div", colDiv2, "div")) return wrong(errorMsg);
+
+            const containerDiv1 = colDiv1.querySelector("div");
+
+            // check if h2  exist
+            errorMsg = "The h2 tag  is missing inside the first container div tag for col-1 div.";
+            if (this.notExist("h2", containerDiv1, "h2")) return wrong(errorMsg);
+
+            // check if p  exist
+            errorMsg = "The paragraph tag  is missing inside the first container div tag for col-1 div.";
+            if (this.notExist("h2 + p", containerDiv1, "p")) return wrong(errorMsg);
+
+            const containerDiv2 = colDiv1.querySelector("div + div");
+
+            // check if img  exist
+            errorMsg = "The image tag  is missing inside the second container div tag for col-1 div.";
+            if (this.notExist("img", containerDiv2, "img")) return wrong(errorMsg);
+
+            const containerDiv3 = colDiv2.querySelector("div");
+
+            // check if h2  exist
+            errorMsg = "The h2 tag  is missing inside the first container div tag for col-2 div.";
+            if (this.notExist("h2", containerDiv3, "h2")) return wrong(errorMsg);
+
+            // check if p  exist
+            errorMsg = "The paragraph tag  is missing inside the first container div tag for col-2 div.";
+            if (this.notExist("h2 + p", containerDiv3, "p")) return wrong(errorMsg);
+
+            const containerDiv4 = colDiv2.querySelector("div + div");
+
+            // check if img  exist
+            errorMsg = "The image tag  is missing inside the second container div tag for col-2 div.";
+            if (this.notExist("img", containerDiv4, "img")) return wrong(errorMsg);
+
+            return correct()
+        }), this.page.execute(() => {
+            // test #23
+            // PRODUCT  STYLE
+
+            // check if it has display flex
+            let errorMsg = "The product div tag doesn't have the correct display value.";
+            if (this.correctStyle("#product", "display", "flex")) return wrong(errorMsg);
+
+            // check if it has flex-wrap
+            errorMsg = "The product div tag doesn't have the correct flex-wrap value.";
+            if (this.correctStyle("#product", "flex-wrap", "wrap")) return wrong(errorMsg);
+
+            // check if it has w100
+            errorMsg = "The product div tag doesn't have the correct width value.";
+            if (this.correctStyle("#product", "width", "800px")) return wrong(errorMsg);
+
+            // check if it has margin top
+            errorMsg = "The product div tag doesn't have the correct margin top value.";
+            if (this.correctStyle("#product", "margin-top", "16px")) return wrong(errorMsg);
+
+            // check if it has margin bottom
+            errorMsg = "The product div tag doesn't have the correct margin bottom value.";
+            if (this.correctStyle("#product", "margin-bottom", "16px")) return wrong(errorMsg);
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #24
+            // COL-1  STYLE
+
+            // check if it has bg color
+            let errorMsg = "The col-1 div tag doesn't have the correct background-color value.";
+            if (this.correctStyle("#col-1", "background-color", "rgb(0, 0, 0)")) return wrong(errorMsg);
+
+            // check if it has flex
+            errorMsg = "The col-1 div tag doesn't have the correct flex value.";
+            if (this.correctStyle("#col-1", "flex", "1 1 0%")) return wrong(errorMsg);
+
+            // check if it has margin right
+            errorMsg = "The col-1 div tag doesn't have the correct margin right value.";
+            if (this.correctStyle("#col-1", "margin-right", "16px")) return wrong(errorMsg);
+
+            // check if it has padding top
+            errorMsg = "The col-1 div tag doesn't have the correct padding top value.";
+            if (this.correctStyle("#col-1", "padding-top", "48px")) return wrong(errorMsg);
+
+            // check if it has padding right
+            errorMsg = "The col-1 div tag doesn't have the correct padding right value.";
+            if (this.correctStyle("#col-1", "padding-right", "48px")) return wrong(errorMsg);
+
+            // check if it has padding left
+            errorMsg = "The col-1 div tag doesn't have the correct padding left value.";
+            if (this.correctStyle("#col-1", "padding-left", "48px")) return wrong(errorMsg);
+
+            // check if it has text align
+            errorMsg = "The col-1 div tag doesn't have the correct text align value.";
+            if (this.correctStyle("#col-1", "text-align", "center")) return wrong(errorMsg);
+
+            // check if it has text white
+            errorMsg = "The col-1 div tag doesn't have the correct color value.";
+            if (this.correctStyle("#col-1", "color", "rgb(255, 255, 255)")) return wrong(errorMsg);
+
+            // check if it has text align
+            errorMsg = "The col-1 div tag doesn't have the correct overflow value.";
+            if (this.correctStyle("#col-1", "overflow", "hidden")) return wrong(errorMsg);
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #25
+            // COL-2  STYLE
+
+            // check if it has bg color
+            let errorMsg = "The col-2 div tag doesn't have the correct background-color value.";
+            if (this.correctStyle("#col-2", "background-color", "rgb(248, 249, 250)")) return wrong(errorMsg);
+
+            // check if it has flex
+            errorMsg = "The col-2 div tag doesn't have the correct flex value.";
+            if (this.correctStyle("#col-2", "flex", "1 1 0%")) return wrong(errorMsg);
+
+            // check if it has padding top
+            errorMsg = "The col-2 div tag doesn't have the correct padding top value.";
+            if (this.correctStyle("#col-2", "padding-top", "48px")) return wrong(errorMsg);
+
+            // check if it has padding right
+            errorMsg = "The col-2 div tag doesn't have the correct padding right value.";
+            if (this.correctStyle("#col-2", "padding-right", "48px")) return wrong(errorMsg);
+
+            // check if it has padding left
+            errorMsg = "The col-2 div tag doesn't have the correct padding left value.";
+            if (this.correctStyle("#col-2", "padding-left", "48px")) return wrong(errorMsg);
+
+            // check if it has text align
+            errorMsg = "The col-2 div tag doesn't have the correct text align value.";
+            if (this.correctStyle("#col-2", "text-align", "center")) return wrong(errorMsg);
+
+            // check if it has text white
+            errorMsg = "The col-2 div tag doesn't have the correct color value.";
+            if (this.correctStyle("#col-2", "color", "rgb(0, 0, 0)")) return wrong(errorMsg);
+
+            // check if it has text align
+            errorMsg = "The col-2 div tag doesn't have the correct overflow value.";
+            if (this.correctStyle("#col-2", "overflow", "hidden")) return wrong(errorMsg);
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #26
+            // COL-1
+            // CONTAINER-1  STYLE
+
+            const col1Div = document.body.querySelector("#col-1");
+            const containerDiv1 = col1Div.querySelector("div");
+
+            // check if it has padding
+            let errorMsg = "The first container div in col-1 div tag doesn't have the correct padding value.";
+            if (this.correctStyle(containerDiv1, "padding", "16px")) return wrong(errorMsg);
+
+            // check if it has margin top
+            errorMsg = "The first container div in col-1 div tag doesn't have the correct margin top value.";
+            if (this.correctStyle(containerDiv1, "margin-top", "16px")) return wrong(errorMsg);
+
+            // check if it has margin bottom
+            errorMsg = "The first container div in col-1 div tag doesn't have the correct margin bottom value.";
+            if (this.correctStyle(containerDiv1, "margin-bottom", "16px")) return wrong(errorMsg);
+
+            // CONTAINER-2 STYLE
+
+            const containerDiv2 = col1Div.querySelector("div + div");
+
+            // check if it has bg color
+            errorMsg = "The second container div in col-1 div tag doesn't have the correct background color value.";
+            if (this.correctStyle(containerDiv2, "background-color", "rgb(248, 249, 250)")) return wrong(errorMsg);
+
+            // check if it has margin right
+            errorMsg = "The second container div in col-1 div tag doesn't have the correct margin right value.";
+            if (this.correctStyle(containerDiv2, "margin-right", "29.6016px")) return wrong(errorMsg);
+
+            // check if it has margin left
+            errorMsg = "The second container div in col-1 div tag doesn't have the correct margin left value.";
+            if (this.correctStyle(containerDiv2, "margin-left", "29.6016px")) return wrong(errorMsg);
+
+            // check if it has width
+            errorMsg = "The second container div in col-1 div tag doesn't have the correct width value.";
+            if (this.correctStyle(containerDiv2, "width", "236.797px")) return wrong(errorMsg);
+
+            // check if it has height
+            errorMsg = "The second container div in col-1 div tag doesn't have the correct height value.";
+            if (this.correctStyle(containerDiv2, "height", "400px")) return wrong(errorMsg);
+
+            // check if it has border top-left-radius
+            errorMsg = "The second container div in col-1 div tag doesn't have the correct border-top-left-radius value.";
+            if (this.correctStyle(containerDiv2, "border-top-left-radius", "21px")) return wrong(errorMsg);
+
+            // check if it has border top-right-radius
+            errorMsg = "The second container div in col-1 div tag doesn't have the correct border-top-right-radius value.";
+            if (this.correctStyle(containerDiv2, "border-top-right-radius", "21px")) return wrong(errorMsg);
+
+            // check if it has border bottom-left-radius
+            errorMsg = "The second container div in col-1 div tag doesn't have the correct border-bottom-left-radius value.";
+            if (this.correctStyle(containerDiv2, "border-bottom-left-radius", "0px")) return wrong(errorMsg);
+
+            // check if it has border bottom-right-radius
+            errorMsg = "The second container div in col-1 div tag doesn't have the correct border-bottom-right-radius value.";
+            if (this.correctStyle(containerDiv2, "border-bottom-right-radius", "0px")) return wrong(errorMsg);
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #27
+            // COL-2
+            // CONTAINER-1  STYLE
+
+            const col2Div = document.body.querySelector("#col-2");
+            const containerDiv1 = col2Div.querySelector("div");
+
+            // check if it has padding
+            let errorMsg = "The first container div in col-2 div tag doesn't have the correct padding value.";
+            if (this.correctStyle(containerDiv1, "padding", "16px")) return wrong(errorMsg);
+
+            // check if it has margin top
+            errorMsg = "The first container div in col-2 div tag doesn't have the correct margin top value.";
+            if (this.correctStyle(containerDiv1, "margin-top", "16px")) return wrong(errorMsg);
+
+            // check if it has margin bottom
+            errorMsg = "The first container div in col-2 div tag doesn't have the correct margin bottom value.";
+            if (this.correctStyle(containerDiv1, "margin-bottom", "16px")) return wrong(errorMsg);
+
+            // CONTAINER-2 STYLE
+
+            const containerDiv2 = col2Div.querySelector("div + div");
+
+            // check if it has bg color
+            errorMsg = "The second container div in col-2 div tag doesn't have the correct background color value.";
+            if (this.correctStyle(containerDiv2, "background-color", "rgb(0, 0, 0)")) return wrong(errorMsg);
+
+            // check if it has margin right
+            errorMsg = "The second container div in col-2 div tag doesn't have the correct margin right value.";
+            if (this.correctStyle(containerDiv2, "margin-right", "29.6016px")) return wrong(errorMsg);
+
+            // check if it has margin left
+            errorMsg = "The second container div in col-2 div tag doesn't have the correct margin left value.";
+            if (this.correctStyle(containerDiv2, "margin-left", "29.6016px")) return wrong(errorMsg);
+
+            // check if it has width
+            errorMsg = "The second container div in col-2 div tag doesn't have the correct width value.";
+            if (this.correctStyle(containerDiv2, "width", "236.797px")) return wrong(errorMsg);
+
+            // check if it has height
+            errorMsg = "The second container div in col-2 div tag doesn't have the correct height value.";
+            if (this.correctStyle(containerDiv2, "height", "400px")) return wrong(errorMsg);
+
+            // check if it has border top-left-radius
+            errorMsg = "The second container div in col-2 div tag doesn't have the correct border-top-left-radius value.";
+            if (this.correctStyle(containerDiv2, "border-top-left-radius", "21px")) return wrong(errorMsg);
+
+            // check if it has border top-right-radius
+            errorMsg = "The second container div in col-2 div tag doesn't have the correct border-top-right-radius value.";
+            if (this.correctStyle(containerDiv2, "border-top-right-radius", "21px")) return wrong(errorMsg);
+
+            // check if it has border bottom-left-radius
+            errorMsg = "The second container div in col-2 div tag doesn't have the correct border-bottom-left-radius value.";
+            if (this.correctStyle(containerDiv2, "border-bottom-left-radius", "0px")) return wrong(errorMsg);
+
+            // check if it has border bottom-right-radius
+            errorMsg = "The second container div in col-2 div tag doesn't have the correct border-bottom-right-radius value.";
+            if (this.correctStyle(containerDiv2, "border-bottom-right-radius", "0px")) return wrong(errorMsg);
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #28
+            // COL1
+            // H2
+
+            const col1Div = document.body.querySelector("#col-1");
+            const containerDiv1 = col1Div.querySelector("div");
+
+            // check if it has inner text
+            const h2 = containerDiv1.querySelector("h2");
+            let errorMsg = "The h2 tag inside first container div in col-1 div doesn't have an inner text.";
+            if (this.innerTextExist(h2)) return wrong(errorMsg);
+
+            // P
+
+            // check if it has inner text
+            const paragraph = containerDiv1.querySelector("p");
+            errorMsg = "The paragraph tag inside first container div in col-1 div doesn't have an inner text.";
+            if (this.innerTextExist(paragraph)) return wrong(errorMsg);
+
+            // check if it has font-size
+            errorMsg = "The paragraph tag inside first container div in col-1 div doesn't have the correct font size value.";
+            if (this.correctStyle(paragraph, "font-size", "20px")) return wrong(errorMsg);
+
+            // check if it has font weight
+            errorMsg = "The paragraph tag inside first container div in col-1 div doesn't have the correct font weight value.";
+            if (this.correctStyle(paragraph, "font-weight", "300")) return wrong(errorMsg);
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #29
+            // COL2
+            // H2
+
+            const col2Div = document.body.querySelector("#col-2");
+            const containerDiv1 = col2Div.querySelector("div");
+
+            // check if it has inner text
+            const h2 = containerDiv1.querySelector("h2");
+            let errorMsg = "The h2 tag inside first container div in col-2 div doesn't have an inner text.";
+            if (this.innerTextExist(h2)) return wrong(errorMsg);
+
+            // P
+
+            // check if it has inner text
+            const paragraph = containerDiv1.querySelector("p");
+            errorMsg = "The paragraph tag inside first container div in col-2 div doesn't have an inner text.";
+            if (this.innerTextExist(paragraph)) return wrong(errorMsg);
+
+            // check if it has font-size
+            errorMsg = "The paragraph tag inside first container div in col-2 div doesn't have the correct font size value.";
+            if (this.correctStyle(paragraph, "font-size", "20px")) return wrong(errorMsg);
+
+            // check if it has font weight
+            errorMsg = "The paragraph tag inside first container div in col-2 div doesn't have the correct font weight value.";
+            if (this.correctStyle(paragraph, "font-weight", "300")) return wrong(errorMsg);
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test 30
+            // IMG1
+
+            const col1Div = document.body.querySelector("#col-1");
+            const containerDiv2 = col1Div.querySelector("div + div");
+
+            // check if it has src
+            const img = containerDiv2.querySelector("img");
+            let errorMsg = "The img tag inside second container div in col-1 div doesn't have an src attribute.";
+            if (this.correctAttr(img, "src", "")) return wrong(errorMsg);
+
+            // check if it has title
+            errorMsg = "The img tag inside second container div in col-1 div doesn't have a title attribute.";
+            if (this.correctAttr(img, "title", "")) return wrong(errorMsg);
+
+            // check if it has alt
+            errorMsg = "The img tag inside second container div in col-1 div doesn't have an alt attribute.";
+            if (this.correctAttr(img, "alt", "")) return wrong(errorMsg);
+
+            // check if it has width
+            errorMsg = "The img tag inside second container div in col-1 div doesn't have the correct width value.";
+            if (this.correctStyle(img, "width", "189.438px")) return wrong(errorMsg);
+
+            // check if it has height
+            errorMsg = "The img tag inside second container div in col-1 div doesn't have the correct height value.";
+            if (this.correctStyle(img, "height", "400px")) return wrong(errorMsg);
+
+            // check if it has border top-left-radius
+            errorMsg = "The img tag inside second container div in col-1 div  doesn't have the correct border-top-left-radius value.";
+            if (this.correctStyle(img, "border-top-left-radius", "21px")) return wrong(errorMsg);
+
+            // check if it has border top-right-radius
+            errorMsg = "The img tag inside second container div in col-1 div  doesn't have the correct border-top-right-radius value.";
+            if (this.correctStyle(img, "border-top-right-radius", "21px")) return wrong(errorMsg);
+
+            // check if it has border bottom-left-radius
+            errorMsg = "The img tag inside second container div in col-1 div  doesn't have the correct border-bottom-left-radius value.";
+            if (this.correctStyle(img, "border-bottom-left-radius", "0px")) return wrong(errorMsg);
+
+            // check if it has border bottom-right-radius
+            errorMsg = "The img tag inside second container div in col-1 div  doesn't have the correct border-bottom-right-radius value.";
+            if (this.correctStyle(img, "border-bottom-right-radius", "0px")) return wrong(errorMsg);
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test 31
+            // IMG2
+
+            const col2Div = document.body.querySelector("#col-2");
+            const containerDiv2 = col2Div.querySelector("div + div");
+
+            // check if it has src
+            const img = containerDiv2.querySelector("img");
+            let errorMsg = "The img tag inside second container div in col-2 div doesn't have an src attribute value.";
+            if (this.correctAttr(img, "src", "")) return wrong(errorMsg);
+
+            // check if it has title
+            errorMsg = "The img tag inside second container div in col-2 div doesn't have a title attribute value.";
+            if (this.correctAttr(img, "title", "")) return wrong(errorMsg);
+
+            // check if it has alt
+            errorMsg = "The img tag inside second container div in col-2 div doesn't have an alt attribute value.";
+            if (this.correctAttr(img, "alt", "")) return wrong(errorMsg);
+
+            // check if it has width
+            errorMsg = "The img tag inside second container div in col-2 div doesn't have the correct width value.";
+            if (this.correctStyle(img, "width", "189.438px")) return wrong(errorMsg);
+
+            // check if it has height
+            errorMsg = "The img tag inside second container div in col-2 div doesn't have the correct height value.";
+            if (this.correctStyle(img, "height", "400px")) return wrong(errorMsg);
+
+            // check if it has border top-left-radius
+            errorMsg = "The img tag inside second container div in col-2 div  doesn't have the correct border-top-left-radius value.";
+            if (this.correctStyle(img, "border-top-left-radius", "21px")) return wrong(errorMsg);
+
+            // check if it has border top-right-radius
+            errorMsg = "The img tag inside second container div in col-2 div  doesn't have the correct border-top-right-radius value.";
+            if (this.correctStyle(img, "border-top-right-radius", "21px")) return wrong(errorMsg);
+
+            // check if it has border bottom-left-radius
+            errorMsg = "The img tag inside second container div in col-2 div  doesn't have the correct border-bottom-left-radius value.";
+            if (this.correctStyle(img, "border-bottom-left-radius", "0px")) return wrong(errorMsg);
+
+            // check if it has border bottom-right-radius
+            errorMsg = "The img tag inside second container div in col-2 div  doesn't have the correct border-bottom-right-radius value.";
+            if (this.correctStyle(img, "border-bottom-right-radius", "0px")) return wrong(errorMsg);
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #32
+            // CONTACT EXIST
+
+            // check if contact div  exist
+            const contactDiv = document.body.querySelector("#contact");
+            let errorMsg = "The div tag with the id of 'contact' is missing inside the footer tag.";
+            if (this.notExist("#contact", "footer", "div")) return wrong(errorMsg);
+
+            // COL EXIST
+
+            // check if col div exist
+            errorMsg = "The column div with the id of 'contact-col1' tag is missing inside the contact div tag.";
+            if (this.notExist("#contact-col1", contactDiv, "div")) return wrong(errorMsg);
+
+            // ANCHOR EXIST
+
+            const colDiv = contactDiv.querySelector("#contact-col1")
+
+            // check if anchor exist
+            errorMsg = "The anchor tag with the id of 'footer_link_logo' is missing inside the column div tag.";
+            if (this.notExist("#footer_link_logo", colDiv, "a")) return wrong(errorMsg);
+
+            // check if img exist
+            const linkLogo = document.body.querySelector("#footer_link_logo");
+            errorMsg = "The image tag is missing inside the link tag with the id of 'footer_link_logo'.";
+            if (this.notExist("img", linkLogo)) return wrong(errorMsg);
+
+            // CONTAINER DIV
+
+            // check if div exist
+            errorMsg = "The div tag wrapping the rest of the links after the footer_link_logo anchor is missing inside" +
+                " the column div tag.";
+            if (this.notExist("a + div", colDiv, "div")) return wrong(errorMsg);
+
+            // ANCHORS EXIST
+
+            // check if anchor exist
+            const wrapperDiv = colDiv.querySelector("a + div");
+            errorMsg = "The anchor tag with the id of 'footer_link_home' is missing inside the wrapper div tag.";
+            if (this.notExist("#footer_link_home", wrapperDiv, "a")) return wrong(errorMsg);
+
+            // check if anchor exist
+            errorMsg = "The anchor tag with the id of 'footer_link_product' is missing inside the wrapper div tag.";
+            if (this.notExist("#footer_link_product", wrapperDiv, "a")) return wrong(errorMsg);
+
+            // check if anchor exist
+            errorMsg = "The anchor tag with the id of 'footer_link_contact' is missing inside the wrapper div tag.";
+            if (this.notExist("#footer_link_contact", wrapperDiv, "a")) return wrong(errorMsg);
+
+            // PARAGRAPH EXIST
+
+            // check if p exist
+            errorMsg = "The paragraph tag is missing inside the column div tag.";
+            if (this.notExist("div + p", colDiv, "p")) return wrong(errorMsg);
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #33
+            // FOOTER STYLE
+
+            // check if footer has max-width style
+            let errorMsg = "The footer tag doesn't have the correct max-width value.";
+            if (this.correctStyle("footer", "maxWidth", "100%")) return wrong(errorMsg)
+
+            // check if footer has padding right style
+            errorMsg = "The footer tag doesn't have the correct padding right value.";
+            if (this.correctStyle("footer", "paddingRight", "16px")) return wrong(errorMsg)
+
+            // check if footer has padding left style
+            errorMsg = "The footer tag doesn't have the correct padding left value.";
+            if (this.correctStyle("footer", "paddingLeft", "16px")) return wrong(errorMsg)
+
+            // check if footer has padding right style
+            errorMsg = "The footer tag doesn't have the correct padding top value.";
+            if (this.correctStyle("footer", "paddingTop", "48px")) return wrong(errorMsg)
+
+            // check if footer has padding left style
+            errorMsg = "The footer tag doesn't have the correct padding bottom value.";
+            if (this.correctStyle("footer", "paddingBottom", "48px")) return wrong(errorMsg)
+
+            // check if footer has margin right style
+            errorMsg = "The footer tag doesn't have the correct margin right value.";
+            if (this.correctStyle("footer", "marginRight", "0px")) return wrong(errorMsg)
+
+            // check if footer has margin left style
+            errorMsg = "The footer tag doesn't have the correct margin left value.";
+            if (this.correctStyle("footer", "marginLeft", "0px")) return wrong(errorMsg)
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #34
+            // CONTACT FLEX
+
+            // check if contact has flex style
+            let errorMsg = "The contact div tag doesn't have the correct display value.";
+            if (this.correctStyle("#contact", "display", "flex")) return wrong(errorMsg)
+
+            // check if contact has flex wrap style
+            errorMsg = "The contact div tag doesn't have the correct flex-wrap value.";
+            if (this.correctStyle("#contact", "flexWrap", "wrap")) return wrong(errorMsg)
+
+            // check if contact has justify-content style
+            errorMsg = "The contact div tag doesn't have the correct justify-content value.";
+            if (this.correctStyle("#contact", "justifyContent", "space-between")) return wrong(errorMsg)
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #35
+            // COL STYLE
+
+            // check if column has max-width style
+            let errorMsg = "The contact col1 div tag doesn't have the correct max-width value.";
+            if (this.correctStyle("#contact-col1", "maxWidth", "100%")) return wrong(errorMsg)
+
+            // check if contact col1 has padding right style
+            errorMsg = "The contact col1 div tag doesn't have the correct padding right value.";
+            if (this.correctStyle("#contact-col1", "paddingRight", "16px")) return wrong(errorMsg)
+
+            // check if contact col1 div has padding left style
+            errorMsg = "The contact col1 div tag doesn't have the correct padding left value.";
+            if (this.correctStyle("#contact-col1", "paddingLeft", "16px")) return wrong(errorMsg)
+
+            // check if contact col1 has margin right style
+            errorMsg = "The contact col1 div tag doesn't have the correct margin right value.";
+            if (this.correctStyle("#contact-col1", "marginRight", "271.07px")) return wrong(errorMsg)
+
+            // check if contact col1 div has margin left style
+            errorMsg = "The contact col1 div tag doesn't have the correct margin left value.";
+            if (this.correctStyle("#contact-col1", "marginLeft", "271.07px")) return wrong(errorMsg)
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #36
+            // COL FLEX
+
+            // check if contact col1 has flex style
+            let errorMsg = "The contact col1 div tag doesn't have the correct display value.";
+            if (this.correctStyle("#contact-col1", "display", "flex")) return wrong(errorMsg)
+
+            // check if contact col1 has flex wrap style
+            errorMsg = "The contact col1 div tag doesn't have the correct flex-wrap value.";
+            if (this.correctStyle("#contact-col1", "flexWrap", "wrap")) return wrong(errorMsg)
+
+            // check if contact col1 has flex-direction style
+            errorMsg = "The contact col1 div tag doesn't have the correct flex-direction value.";
+            if (this.correctStyle("#contact-col1", "flex-direction", "column")) return wrong(errorMsg)
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #37
+            // FOOTER LINKS HREF
+
+            // LINK_LOGO
+            // check if link logo href correct
+            let errorMsg = "The anchor tag with the id of 'footer_link_logo' is missing the correct href attribute.";
+            if (this.correctAttr("#footer_link_logo", "href", "#home")) return wrong(errorMsg);
+
+            // LINK_HOME
+            // check if link home href correct
+            errorMsg = "The anchor tag with the id of 'footer_link_home' is missing the correct href attribute.";
+            if (this.correctAttr("#footer_link_home", "href", "#home")) return wrong(errorMsg);
+
+            // LINK_PRODUCT
+            // check if footer_link product href correct
+            errorMsg = "The anchor tag with the id of 'footer_link_product' is missing the correct href attribute.";
+            if (this.correctAttr("#footer_link_product", "href", "#product")) return wrong(errorMsg);
+
+            // LINK_CONTACT
+            // check if footer_link contact href correct
+            errorMsg = "The anchor tag with the id of 'footer_link_contact' is missing the correct href attribute.";
+            if (this.correctAttr("#footer_link_contact", "href", "#contact")) return wrong(errorMsg);
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #38
+            // LINK IMG
+
+            // check if img has correct src
+            let errorMsg = "The image tag in '#footer_link_logo' doesn't have an src attribute value.";
+            if (this.correctAttr("#footer_link_logo > img", "src", "")) return wrong(errorMsg);
+
+            // check if #footer_link_logo > img has correct width
+            errorMsg = "The image tag in '#footer_link_logo' doesn't have the correct width attribute value.";
+            if (this.correctAttr("#footer_link_logo > img", "width", "64")) return wrong(errorMsg);
+
+            // check if #footer_link_logo > img has correct height
+            errorMsg = "The image tag in '#footer_link_logo' doesn't have the correct height attribute value.";
+            if (this.correctAttr("#footer_link_logo > img", "height", "64")) return wrong(errorMsg);
+
+            // check if #footer_link_logo > img has correct title
+            errorMsg = "The image tag in '#footer_link_logo' doesn't have a title attribute value.";
+            if (this.correctAttr("#footer_link_logo > img", "title", "")) return wrong(errorMsg);
+
+            // check if img has correct alt
+            errorMsg = "The image tag in '#footer_link_logo' doesn't have an alt attribute value.";
+            if (this.correctAttr("#footer_link_logo > img", "alt", "")) return wrong(errorMsg);
+
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #39
+            // LINK LOGO MY-AUTO
+
+            // LINK_LOGO
+            // check if link logo margin-top correct
+            let errorMsg = "The anchor tag with the id of 'footer_link_logo' doesn't have the correct margin-top value.";
+            if (this.correctStyle("#footer_link_logo", "marginTop", "0px")) return wrong(errorMsg);
+
+            // check if link logo margin-bottom correct
+            errorMsg = "The anchor tag with the id of 'footer_link_logo' doesn't have the correct margin-bottom value.";
+            if (this.correctStyle("#footer_link_logo", "marginBottom", "0px")) return wrong(errorMsg);
+
+            errorMsg = "The anchor tag with the id of 'footer_link_logo' doesn't have the correct text-color value.";
+            if (this.correctStyle("#footer_link_logo", "color", "rgb(108, 117, 125)")) return wrong(errorMsg);
+
+            errorMsg = "The anchor tag with the id of 'footer_link_logo' doesn't have the correct text-decoration value.";
+            if (this.correctStyle("#footer_link_logo", "text-decoration-line", "none")) return wrong(errorMsg);
+
+            // WRAPPER DIV STYLE
+
+            const wrapperDiv = document.body.querySelector("#contact-col1 > a + div");
+
+            errorMsg = "The div tag wrapping the rest of the links should be a direct child of the contact-col1 " +
+                "div after the footer_link_logo anchor.";
+            if (!wrapperDiv) return wrong(errorMsg);
+
+            errorMsg = "The div tag wrapping the rest of the links doesn't have the correct margin-top value.";
+            if (this.correctStyle(wrapperDiv, "marginTop", "0px")) return wrong(errorMsg);
+
+            errorMsg = "The div tag wrapping the rest of the links doesn't have the correct margin-bottom value.";
+            if (this.correctStyle(wrapperDiv, "marginBottom", "0px")) return wrong(errorMsg);
+
+            // PARAGRAPH STYLE
+            const paragraph = document.body.querySelector("#contact > div > div + p");
+
+            errorMsg = "The paragraph tag should be a direct child of the contact-col1 " +
+                "div after all the footer link elements.";
+            if (!paragraph) return wrong(errorMsg);
+
+            errorMsg = "The paragraph tag after the footer links doesn't have the correct text color value.";
+            if (this.correctStyle(paragraph, "color", "rgb(108, 117, 125)")) return wrong(errorMsg);
+
+            errorMsg = "The paragraph tag after the footer links doesn't have the correct inner text value.";
+            if (this.innerTextExist(paragraph, "2022")) return wrong(errorMsg);
+
+            return correct()
+        }), this.page.execute(() => {
+            // test #40
+            // LINKS STYLE
+
+            // check if link home margin-right correct
+            let errorMsg = "The anchor tag with the id of 'footer_link_home' doesn't have the correct margin-right value.";
+            if (this.correctStyle("#footer_link_home", "margin-right", "16px")) return wrong(errorMsg);
+
+            errorMsg = "The anchor tag with the id of 'footer_link_home' doesn't have the correct text-color value.";
+            if (this.correctStyle("#footer_link_home", "color", "rgb(108, 117, 125)")) return wrong(errorMsg);
+
+            errorMsg = "The anchor tag with the id of 'footer_link_home' doesn't have the correct text-decoration value.";
+            if (this.correctStyle("#footer_link_home", "text-decoration", "none solid rgb(108, 117, 125)")) return wrong(errorMsg);
+
+            // check if link product margin-right correct
+            errorMsg = "The anchor tag with the id of 'footer_link_product' doesn't have the correct margin-right value.";
+            if (this.correctStyle("#footer_link_product", "margin-right", "16px")) return wrong(errorMsg);
+
+            errorMsg = "The anchor tag with the id of 'footer_link_product' doesn't have the correct text-color value.";
+            if (this.correctStyle("#footer_link_product", "color", "rgb(108, 117, 125)")) return wrong(errorMsg);
+
+            errorMsg = "The anchor tag with the id of 'footer_link_product' doesn't have the correct text-decoration value.";
+            if (this.correctStyle("#footer_link_product", "text-decoration", "none solid rgb(108, 117, 125)")) return wrong(errorMsg);
+
+            errorMsg = "The anchor tag with the id of 'footer_link_contact' doesn't have the correct text-color value.";
+            if (this.correctStyle("#footer_link_contact", "color", "rgb(108, 117, 125)")) return wrong(errorMsg);
+
+            errorMsg = "The anchor tag with the id of 'footer_link_contact' doesn't have the correct text-decoration value.";
+            if (this.correctStyle("#footer_link_contact", "text-decoration", "none solid rgb(108, 117, 125)")) return wrong(errorMsg);
+
+            return correct()
         })]
+
 
 }
 
