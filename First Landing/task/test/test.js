@@ -40,7 +40,8 @@ class Test extends StageTest {
                 if (typeof element === "string") element = document.querySelector(node);
                 if (!element) return true
                 const _attr = element.getAttribute(attr)
-                return !_attr || !_attr.includes(correctVal)
+                //console.log(element[attr].toString())
+                return !_attr || !_attr.includes(correctVal);
             };
             this.correctStyle = (node, prop, correctVal) => {
                 let element = node;
@@ -50,7 +51,7 @@ class Test extends StageTest {
                     style = Math.floor(style.split("px")[0]) + 1
                     correctVal = Math.floor(correctVal.split("px")[0]) + 1
                 }
-                // console.log(style)
+                //console.log(style)
                 return !style || style !== correctVal
             };
             this.bgColorExist = (node) => {
@@ -1057,7 +1058,6 @@ class Test extends StageTest {
             // check if it has border bottom-right-radius
             errorMsg = "The img tag inside second container div in col-2 div  doesn't have the correct border-bottom-right-radius value.";
             if (this.correctStyle(img, "border-bottom-right-radius", "0px")) return wrong(errorMsg);
-
             return correct()
 
         }), this.page.execute(() => {
@@ -1188,11 +1188,11 @@ class Test extends StageTest {
 
             // check if contact col1 has margin right style
             errorMsg = "The contact col1 div tag doesn't have the correct margin right value.";
-            if (this.correctStyle("#contact-col1", "marginRight", "271.07px")) return wrong(errorMsg)
+            if (this.correctStyle("#contact-col1", "marginRight", "70.5547px")) return wrong(errorMsg)
 
             // check if contact col1 div has margin left style
             errorMsg = "The contact col1 div tag doesn't have the correct margin left value.";
-            if (this.correctStyle("#contact-col1", "marginLeft", "271.07px")) return wrong(errorMsg)
+            if (this.correctStyle("#contact-col1", "marginLeft", "70.5547px")) return wrong(errorMsg)
 
             return correct()
 
@@ -1274,17 +1274,17 @@ class Test extends StageTest {
             // LINK_LOGO
             // check if link logo margin-top correct
             let errorMsg = "The anchor tag with the id of 'footer_link_logo' doesn't have the correct margin-top value.";
-            if (this.correctStyle("#footer_link_logo", "marginTop", "0px")) return wrong(errorMsg);
+            if (this.correctStyle("#footer_link_logo", "marginTop", "10px")) return wrong(errorMsg);
 
             // check if link logo margin-bottom correct
             errorMsg = "The anchor tag with the id of 'footer_link_logo' doesn't have the correct margin-bottom value.";
-            if (this.correctStyle("#footer_link_logo", "marginBottom", "0px")) return wrong(errorMsg);
+            if (this.correctStyle("#footer_link_logo", "marginBottom", "10px")) return wrong(errorMsg);
 
             errorMsg = "The anchor tag with the id of 'footer_link_logo' doesn't have the correct text-color value.";
             if (this.correctStyle("#footer_link_logo", "color", "rgb(108, 117, 125)")) return wrong(errorMsg);
 
             errorMsg = "The anchor tag with the id of 'footer_link_logo' doesn't have the correct text-decoration value.";
-            if (this.correctStyle("#footer_link_logo", "text-decoration-line", "none")) return wrong(errorMsg);
+            if (this.correctStyle("#footer_link_logo", "text-decoration", "none solid rgb(108, 117, 125)")) return wrong(errorMsg);
 
             // WRAPPER DIV STYLE
 
@@ -1295,10 +1295,10 @@ class Test extends StageTest {
             if (!wrapperDiv) return wrong(errorMsg);
 
             errorMsg = "The div tag wrapping the rest of the links doesn't have the correct margin-top value.";
-            if (this.correctStyle(wrapperDiv, "marginTop", "0px")) return wrong(errorMsg);
+            if (this.correctStyle(wrapperDiv, "marginTop", "10px")) return wrong(errorMsg);
 
             errorMsg = "The div tag wrapping the rest of the links doesn't have the correct margin-bottom value.";
-            if (this.correctStyle(wrapperDiv, "marginBottom", "0px")) return wrong(errorMsg);
+            if (this.correctStyle(wrapperDiv, "marginBottom", "10px")) return wrong(errorMsg);
 
             // PARAGRAPH STYLE
             const paragraph = document.body.querySelector("#contact > div > div + p");
@@ -1345,6 +1345,332 @@ class Test extends StageTest {
             if (this.correctStyle("#footer_link_contact", "text-decoration", "none solid rgb(108, 117, 125)")) return wrong(errorMsg);
 
             return correct()
+        }), this.page.execute(() => {
+            // test #41
+            // COLUMN EXIST
+
+            const contactDiv = document.body.querySelector("#contact");
+
+            // COL EXIST
+
+            // check if col div exist
+            let errorMsg = "The new column div tag with the id of 'contact-col2' is missing inside the contact div tag.";
+            if (this.notExist("#contact-col2", contactDiv, "div")) return wrong(errorMsg);
+
+            // FORM EXIST
+
+            // check if form exist
+            errorMsg = "The form tag is missing inside the new column div tag.";
+            if (this.notExist("form", "div")) return wrong(errorMsg);
+
+            // check if h5 exist
+            errorMsg = "The h5 tag is missing inside the form tag.";
+            if (this.notExist("h5", "form")) return wrong(errorMsg);
+
+            // CONTAINER DIV
+
+            // check if div exist
+            errorMsg = "The div tag wrapping the email input is missing inside the form tag.";
+            if (this.notExist("h5 + div", "form")) return wrong(errorMsg);
+
+            // check if div has margin bottom
+            errorMsg = "The div tag wrapping the email input doesn't have the correct margin bottom value.";
+            if (this.correctStyle("h5 + div", "margin-bottom", "16px")) return wrong(errorMsg);
+
+            // check if label exist
+            const wrapperDiv = contactDiv.querySelector("h5 + div");
+            errorMsg = "The label tag for email input is missing inside the wrapper div tag.";
+            if (this.notExist("label", wrapperDiv)) return wrong(errorMsg);
+
+            // check if input exist
+            errorMsg = "The input tag for email is missing inside the wrapper div tag.";
+            if (this.notExist("label + #email", wrapperDiv)) return wrong(errorMsg);
+
+            // CONTAINER DIV
+
+            const form = contactDiv.querySelector("form");
+
+            // check if div exist
+            errorMsg = "The div tag wrapping the checkbox is missing inside the form tag.";
+            if (this.notExist("div + div", form)) return wrong(errorMsg);
+
+            // check if div has margin bottom
+            errorMsg = "The div tag wrapping the checkbox doesn't have the correct margin bottom value.";
+            if (this.correctStyle("div + div", "margin-bottom", "16px")) return wrong(errorMsg);
+
+            // check if label exist
+            const wrapperDiv2 = form.querySelector("div + div");
+
+            errorMsg = "The label tag for checkbox is missing inside the wrapper div tag.";
+            if (this.notExist("label", wrapperDiv2)) return wrong(errorMsg);
+
+            // check if input exist
+            errorMsg = "The checkbox is missing inside the label tag.";
+            if (this.notExist("label > input", "label")) return wrong(errorMsg);
+
+            // check if button exist
+            errorMsg = "The button tag is missing inside the form tag.";
+            if (this.notExist("button", "form")) return wrong(errorMsg);
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #42
+            // COLUMN STYLE
+
+            const col = document.body.querySelector("#contact-col2");
+
+            // check if new column div has max-width style
+            let errorMsg = "The contact col2 div tag doesn't have the correct max-width value.";
+            if (this.correctStyle(col, "maxWidth", "100%")) return wrong(errorMsg)
+
+            // check if contact col2 div has padding right style
+            errorMsg = "The contact col2 div tag doesn't have the correct padding right value.";
+            if (this.correctStyle(col, "paddingRight", "16px")) return wrong(errorMsg)
+
+            // check if contact col2 div has padding left style
+            errorMsg = "The contact col2 div tag doesn't have the correct padding left value.";
+            if (this.correctStyle(col, "paddingLeft", "16px")) return wrong(errorMsg)
+
+            // check if contact col2 div has margin right style
+            errorMsg = "The contact col2 div tag doesn't have the correct margin right value.";
+            if (this.correctStyle(col, "marginRight", "70.5547px")) return wrong(errorMsg)
+
+            // check if contact col2 div has margin left style
+            errorMsg = "The contact col2 div tag doesn't have the correct margin left value.";
+            if (this.correctStyle(col, "marginLeft", "70.5547px")) return wrong(errorMsg)
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #43
+            // h5 STYLE
+
+            const col = document.body.querySelector("#contact-col2");
+            const h5 = col.querySelector("h5");
+
+            // check if h5 has max-width style
+            let errorMsg = "The h5 tag doesn't have the correct font-weight value.";
+            if (this.correctStyle(h5, "font-weight", "500")) return wrong(errorMsg)
+
+            // check if h5 has padding left style
+            errorMsg = "The h5 tag doesn't have the correct font-size value.";
+            if (this.correctStyle(h5, "font-size", "20px")) return wrong(errorMsg)
+
+            // check if h5 has padding right style
+            errorMsg = "The h5 tag doesn't have the correct line-height value.";
+            if (this.correctStyle(h5, "line-height", "24px")) return wrong(errorMsg)
+
+            // check if h5 has margin right style
+            errorMsg = "The h5 tag doesn't have the correct margin top value.";
+            if (this.correctStyle(h5, "margin-top", "0px")) return wrong(errorMsg)
+
+            // check if h5 has margin left style
+            errorMsg = "The h5 tag doesn't have the correct margin bottom value.";
+            if (this.correctStyle(h5, "margin-bottom", "8px")) return wrong(errorMsg)
+
+            // check if h5 has color style
+            errorMsg = "The h5 tag doesn't have the correct text color value.";
+            if (this.correctStyle(h5, "color", "rgb(248, 249, 250)")) return wrong(errorMsg)
+
+            // check if h5 has inner text
+            errorMsg = "The h5 tag doesn't have an inner text value.";
+            if (this.innerTextExist(h5)) return wrong(errorMsg)
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #44
+            // label STYLE
+
+            const col = document.body.querySelector("#contact-col2");
+            const wrapper = col.querySelector("h5 + div");
+            const label = wrapper.querySelector("label");
+
+            // check if label has max-width style
+            let errorMsg = "The email label tag doesn't have the correct display value.";
+            if (this.correctStyle(label, "display", "block")) return wrong(errorMsg)
+
+            // check if h5 has margin bottom style
+            errorMsg = "The email label tag doesn't have the correct margin bottom value.";
+            if (this.correctStyle(label, "margin-bottom", "8px")) return wrong(errorMsg)
+
+            // check if label has color style
+            errorMsg = "The email label tag doesn't have the correct text color value.";
+            if (this.correctStyle(label, "color", "rgb(248, 249, 250)")) return wrong(errorMsg)
+
+            // check if label has inner text
+            errorMsg = "The email label tag doesn't have the correct inner text value.";
+            if (this.innerTextExist(label, "Email")) return wrong(errorMsg)
+
+            // check if label has for attr
+            errorMsg = "The email label tag doesn't have the correct for attribute value.";
+            if (this.correctAttr(label, "for", "email")) return wrong(errorMsg)
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #45
+            // input attr
+
+            const input = document.body.querySelector("#email");
+
+            // check if input has max-width style
+            let errorMsg = "The email input tag doesn't have the correct width value.";
+            if (this.correctStyle(input, "width", "227.906px")) return wrong(errorMsg)
+
+            // check if input has padding-top style
+            errorMsg = "The email input tag doesn't have the correct padding-top value.";
+            if (this.correctStyle(input, "padding-top", "6px")) return wrong(errorMsg)
+
+            // check if input has padding-bottom style
+            errorMsg = "The email input tag doesn't have the correct padding-bottom value.";
+            if (this.correctStyle(input, "padding-bottom", "6px")) return wrong(errorMsg)
+
+            // check if input has padding-right style
+            errorMsg = "The email input tag doesn't have the correct padding-right value.";
+            if (this.correctStyle(input, "padding-right", "12px")) return wrong(errorMsg)
+
+            // check if input has padding-left style
+            errorMsg = "The email input tag doesn't have the correct padding-left value.";
+            if (this.correctStyle(input, "padding-left", "12px")) return wrong(errorMsg)
+
+            // check if input has color style
+            errorMsg = "The email input tag doesn't have the correct font size value.";
+            if (this.correctStyle(input, "font-size", "16px")) return wrong(errorMsg)
+
+            // check if input has line-height style
+            errorMsg = "The email input tag doesn't have the correct line height value.";
+            if (this.correctStyle(input, "line-height", "24px")) return wrong(errorMsg)
+
+            // check if input has border style
+            errorMsg = "The email input tag doesn't have the correct border value.";
+            if (this.correctStyle(input, "border", "1px solid rgb(206, 212, 218)")) return wrong(errorMsg)
+
+            // check if input has border-radius style
+            errorMsg = "The email input tag doesn't have the correct border-radius value.";
+            if (this.correctStyle(input, "border-radius", "4px")) return wrong(errorMsg)
+
+            // check if input has required attr
+            errorMsg = "The email input tag doesn't have the correct required attribute value.";
+            if (!input["required"] || input["required"].toString() !== "true") return wrong(errorMsg)
+
+            // check if input has type attr
+            errorMsg = "The email input tag doesn't have the correct type attribute value.";
+            if (this.correctAttr(input, "type", "email")) return wrong(errorMsg)
+
+            // check if input has placeholder attr
+            errorMsg = "The email input tag doesn't have the correct placeholder attribute value.";
+            if (this.correctAttr(input, "placeholder", "you@example.com")) return wrong(errorMsg)
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #46
+            // label STYLE
+
+            const col = document.body.querySelector("#contact-col2");
+            const wrapper = col.querySelector("div + div");
+            const label = wrapper.querySelector("label");
+
+            // check if label has color style
+            let errorMsg = "The checkbox label tag doesn't have the correct text color value.";
+            if (this.correctStyle(label, "color", "rgb(248, 249, 250)")) return wrong(errorMsg)
+
+            // check if label has inner text
+            errorMsg = "The checkbox label tag doesn't have an inner text value.";
+            if (this.innerTextExist(label)) return wrong(errorMsg);
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #47
+            // input attr
+
+            const col = document.body.querySelector("#contact-col2");
+            const wrapper = col.querySelector("div + div");
+            const input = wrapper.querySelector("input");
+
+            // check if input has required attr
+            let errorMsg = "The checkbox input tag doesn't have the correct required attribute value.";
+            if (!input["required"] || input["required"].toString() !== "true") return wrong(errorMsg)
+
+            // check if input has type attr
+            errorMsg = "The checkbox input tag doesn't have the correct type attribute value.";
+            if (this.correctAttr(input, "type", "checkbox")) return wrong(errorMsg)
+
+            return correct()
+
+        }), this.page.execute(() => {
+            // test #48
+            // button
+
+            const col = document.body.querySelector("#contact-col2");
+            const button = col.querySelector("button");
+
+            // check if button has max-width style
+            let errorMsg = "The button tag doesn't have the correct width value.";
+            if (this.correctStyle(button, "width", "227.906px")) return wrong(errorMsg)
+
+            // check if button inner text
+            errorMsg = "The button tag doesn't have an inner text value.";
+            if (this.innerTextExist(button)) return wrong(errorMsg);
+
+            // check if button has type attr
+            errorMsg = "The button tag doesn't have the correct type attribute value.";
+            if (this.correctAttr(button, "type", "submit")) return wrong(errorMsg)
+
+            // check if it has display inline-block
+            errorMsg = "The button tag doesn't have the correct display value.";
+            if (this.correctStyle(button, "display", "inline-block")) return wrong(errorMsg);
+
+            // check if it has correct border
+            errorMsg = "The button tag doesn't have the correct border value.";
+            if (this.correctStyle(button, "border", "1px solid rgb(108, 117, 125)")) return wrong(errorMsg);
+
+            // check if it has padding
+            errorMsg = "The button tag doesn't have the correct padding value.";
+            if (this.correctStyle(button, "padding", "6px 12px")) return wrong(errorMsg);
+
+
+            // check if button has padding-top style
+            errorMsg = "The button tag doesn't have the correct padding-top value.";
+            if (this.correctStyle(button, "padding-top", "6px")) return wrong(errorMsg)
+
+            // check if button has padding-bottom style
+            errorMsg = "The button tag doesn't have the correct padding-bottom value.";
+            if (this.correctStyle(button, "padding-bottom", "6px")) return wrong(errorMsg)
+
+            // check if button has padding-right style
+            errorMsg = "The button tag doesn't have the correct padding-right value.";
+            if (this.correctStyle(button, "padding-right", "12px")) return wrong(errorMsg)
+
+            // check if button has padding-left style
+            errorMsg = "The button tag doesn't have the correct padding-left value.";
+            if (this.correctStyle(button, "padding-left", "12px")) return wrong(errorMsg)
+
+            // check if it has font size
+            errorMsg = "The button tag doesn't have the correct font size value.";
+            if (this.correctStyle(button, "font-size", "16px")) return wrong(errorMsg);
+
+            // check if it has font size
+            errorMsg = "The button tag doesn't have the correct border radius value.";
+            if (this.correctStyle(button, "border-radius", "4px")) return wrong(errorMsg);
+
+            // check if it has text decoration
+            errorMsg = "The button tag doesn't have the correct text decoration value.";
+            if (this.correctStyle(button, "text-decoration-line", "none")) return wrong(errorMsg);
+
+            // check if it has color
+            errorMsg = "The button tag doesn't have the correct color value.";
+            if (this.correctStyle(button, "color", "rgb(255, 255, 255)")) return wrong(errorMsg);
+
+            // check if it has background color
+            errorMsg = "The button tag doesn't have the correct background color value.";
+            if (this.correctStyle(button, "background-color", "rgb(108, 117, 125)")) return wrong(errorMsg);
+
+            return correct()
+
         })]
 
 

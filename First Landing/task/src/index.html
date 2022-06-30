@@ -71,15 +71,30 @@
 <footer>
     <div id="contact">
         <div id="contact-col1">
-                <a href="#home" id="footer_link_logo">
-                    <img src="images/logo.png" alt="Logo" title="A7med" width="64px" height="64px"/>
-                </a>
+            <a href="#home" id="footer_link_logo">
+                <img src="images/logo.png" alt="Logo" title="A7med" width="64px" height="64px"/>
+            </a>
             <div id="footer-links">
                 <a href="#home" id="footer_link_home">Home</a>
                 <a href="#product" id="footer_link_product">Products</a>
                 <a href="#contact" id="footer_link_contact">Contact</a>
             </div>
             <p>2022</p>
+        </div>
+        <div id="contact-col2">
+            <form>
+                <h5>Waiting list</h5>
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required placeholder="you@example.com">
+                </div>
+                <div>
+                    <label for="agree-checkbox">I agree to receive emails
+                        <input type="checkbox" id="agree-checkbox" required>
+                    </label>
+                </div>
+                <button id="submit" type="submit">Submit</button>
+            </form>
         </div>
     </div>
 </footer>
